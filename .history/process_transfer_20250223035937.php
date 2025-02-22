@@ -139,7 +139,7 @@ function check_duplicate_transfer($bank_account_no, $amount) {
 function check_recent_transfer($bank_account_no, $amount) {
     $conn = get_connection();
     $stmt = $conn->prepare("
-        SELECT * FROM tranferlog_ruay168_ptop 
+        SELECT * FROM tranferlog_y2k_ptop 
         WHERE bankAccountNo = :bank_account_no 
         AND amount = :amount 
         AND date_time >= :date_time
@@ -372,7 +372,7 @@ function process_action($action, $data) {
                 try {
                     // บันทึก tranferlog_bl_ptop
                     $stmt = $conn->prepare("
-                        INSERT INTO tranferlog_ruay168_ptop (
+                        INSERT INTO tranferlog_y2k_ptop (
                             amount, date_time, bankAccountNo
                         ) VALUES (
                             :amount, :date_time, :bank_account_no
@@ -387,7 +387,7 @@ function process_action($action, $data) {
 
                     // บันทึก tranferlog_bl
                     $stmt = $conn->prepare("
-                        INSERT INTO tranferlog_ruay168 (
+                        INSERT INTO tranferlog_y2k (
                             phonenumber, amount, date_time, 
                             employee_name, employee_id
                         ) VALUES (
@@ -422,7 +422,7 @@ function process_action($action, $data) {
                         'date_time' => $date_time,
                         'employee_name' => $employee['employee_name'],
                         'employee_id' => $data['employee_id'],
-                        'prefix_wep' => 'ruay168',
+                        'prefix_wep' => 'y2k',
                         'datalog' => json_encode($result)
                     ]);
 
